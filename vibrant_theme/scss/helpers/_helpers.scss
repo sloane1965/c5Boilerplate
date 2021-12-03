@@ -1,0 +1,44 @@
+/* Mobile Nav Basic mixin
+
+   HTML --------------------------------------------------------
+   
+   Add to header.php file:
+   <?php require('navigation/mobile-nav-basic.php'); ?>
+
+   SCSS --------------------------------------------------------
+
+   Optional arguments to pass:
+   1. Breakpoint: $breakpoint (default: $lg-breakpoint)
+   2. Nav Item Color: $navItemColor (default: #000)
+   3. Nav Item Hover: $navItemHover (default: #f00)
+   4. Mobile Menu Background Color: $mobileMenuBg (default: #ccc)
+   5. Hamburger Color: $hamburgerColor (default: #000)
+   6. Hamburger Open Color: $hamburgerOpenColor (default: #ffCC00)
+   7. Animation Time: $animationTime (default: .3s)
+   8. Hamburger Top Value: $hamburgerTop (default: 60px)
+   9. Nav Menu Top Value: $navMenuTop (default: 120px)
+   10: Hamburger Right Float: $right (default: false)
+
+   .mobile-nav-basic {
+      @include mobile-nav-basic($breakpoint: $sm-breakpoint);
+   }
+
+   Also, to prevent the ability to scroll while mobile menu is open, this rule must be added:
+
+   body {
+
+      &.menu-open {
+         overflow: hidden;
+      }
+   }
+
+   JQuery --------------------------------------------------------
+    
+    $('.toggle-wrapper').click(function(){
+        $(this).toggleClass('active');
+        $(this).toggleClass('inactive');
+        $('.nav').toggle();
+        $('body').toggleClass('menu-open');
+    });
+
+*/

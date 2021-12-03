@@ -1,0 +1,230 @@
+
+/* SCSS - Vertical Centering */
+@mixin vertical-center {
+   position: relative;
+   top: 50%;
+   -ms-transform: translateY(-50%);
+   -webkit-transform: translateY(-50%);
+   transform: translateY(-50%);
+}
+
+
+
+/* SCSS -- retina ready images */
+@mixin retina-image($image, $width, $height) {
+   @media (min--moz-device-pixel-ratio: 1.3),
+   (-o-min-device-pixel-ratio: 2.6/2),
+   (-webkit-min-device-pixel-ratio: 1.3),
+   (min-device-pixel-ratio: 1.3),
+   (min-resolution: 1.3dppx) {
+       background-image: url($image);
+       background-size: $width $height;
+   }
+}
+
+/* SCSS -- Absolute positioning */
+@mixin abs-position ($top, $right, $bottom, $left) {
+   position: absolute; 
+   top: $top;
+   right: $right;
+   bottom: $bottom;
+   left: $left;
+}
+
+/* Mobile Nav Basic mixin
+   Optional arguments to pass:
+   1. Breakpoint: $breakpoint;
+   2. Nav Item Color: $navItemColor;
+   3. Nav Item Hover: $navItemHover;
+   4. Mobile Menu Background Color: $mobileMenuBg;
+   5. Hamburger Color: $hamburgerColor;
+   6. Hamburger Open Color: $hamburgerOpenColor;
+   7. Animation Time: $animationTime;
+   8. Hamburger Top Value: $hamburgerTop;
+   9. Nav Menu Top Value: $navMenuTop;
+   10: Hamburger Right Float: $right;
+*/
+
+@mixin mobile-nav-basic($breakpoint: $lg-breakpoint, $navItemColor: #000, $navItemHover: #f00, $mobileMenuBg: #ccc, $hamburgerColor: #000, $hamburgerOpenColor: #ffCC00, $animationTime: .3s, $hamburgerTop: 60px, $navMenuTop: 120px, $right: false) {
+
+    .toggle-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 30px;
+        height: 26px;
+        position: fixed;
+        top: 60px;
+
+        z-index: 5;
+
+        @if $right==false {
+            left: 30px;
+        }
+
+        @else {
+            right: 30px;
+        }
+
+        p {
+            font-size: 0.7em;
+            margin: 32px 0 0 -1px;
+        }
+
+        &.active {
+
+            p {
+                color: $hamburgerOpenColor;
+                transition: $animationTime color ease-out;
+            }
+
+            .bar {
+                transition: $animationTime all ease-out;
+
+                &:first-child {
+                    background: $hamburgerOpenColor;
+                    transform: rotate(-45deg);
+                    top: 50%;
+                }
+
+                &:nth-child(2) {
+                    opacity: 0;
+                }
+
+                &:nth-child(3) {
+                    background: $hamburgerOpenColor;
+                    transform: rotate(45deg);
+                    top: 50%;
+                }
+            }
+        }
+
+        &.inactive {
+
+            .bar {
+                background: $hamburgerColor;
+                transition: $animationTime all ease-out;
+
+                &:first-child {
+                    background: $hamburgerColor;
+                    transform: rotate(0);
+                    top: 20%;
+                }
+
+                &:nth-child(2) {
+                    opacity: 1;
+                }
+
+                &:nth-child(3) {
+                    background: $hamburgerColor;
+                    transform: rotate(0);
+                    top: 80%;
+                }
+            }
+        }
+
+        @media screen and (min-width: $breakpoint) {
+            display: none;
+        }
+    }
+
+    .menu-toggle {
+        cursor: pointer;
+
+        .bg {
+            display: block;
+            width: 100%;
+            height: 30px;
+            position: absolute;
+
+        }
+
+        .bar {
+            background: $hamburgerColor;
+            display: block;
+            height: 2px;
+            position: absolute;
+            width: 100%;
+            top: 10%;
+
+            &:nth-child(2) {
+                top: 50%;
+            }
+
+            &:nth-child(3) {
+                top: 90%;
+            }
+        }
+    }
+
+    .nav {
+        align-items: center;
+        display: flex;
+        font-weight: 700;
+        justify-content: flex-end;
+        text-align: right;
+        z-index: 3;
+
+        @media screen and (max-width: $breakpoint) {
+            background: $mobileMenuBg;
+            display: none;
+            top: $navMenuTop;
+            position: fixed;
+            justify-content: flex-start;
+            width: 100%;
+            height: 100vh;
+        }
+
+        li {
+            display: flex;
+            margin-right: 20px;
+            text-decoration: none;
+            text-align: left;
+
+            a {
+                align-items: center;
+                color: $navItemColor;
+                display: flex;
+                height: 50px;
+                justify-content: center;
+                text-decoration: none;
+
+                width: 100%;
+
+                &:hover {
+                    color: $navItemHover;
+                    transition: all .5s ease-out;
+                }
+
+                @media screen and (max-width: $breakpoint) {
+                    color: white;
+
+                    &:hover {
+                        color: white;
+                    }
+                }
+            }
+
+            @media screen and (max-width: $breakpoint) {
+                align-items: center;
+                background: $navItemColor;
+                border-bottom: 1px solid white;
+                color: white;
+                font-size: 1.2em;
+                justify-content: center;
+                margin: 0;
+                height: 50px;
+                text-align: center;
+                transition: all .5s ease-out;
+                width: 100%;
+
+                &:hover {
+                    color: white;
+                    background: $navItemHover;
+                }
+
+            }
+        }
+
+        @include flex-col-layout($breakpoint);
+    }
+}
